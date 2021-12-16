@@ -28,7 +28,7 @@ it possible to use Frends expression syntax directly inside templates without
 adding an extra task to first create the template. **Please note that this feature is experimental.**
 More tests are needed.
 
-[Handlebars.NET] (https://github.com/Handlebars-Net/Handlebars.Net) supports adding custom helper
+[Handlebars.NET](https://github.com/Handlebars-Net/Handlebars.Net) supports adding custom helper
 functions. This is now exposed in the Handlebars task. Custom helpers are declared inside a C#
 statement and assigned to a variable that can then be referenced in a Handlebars task.
 
