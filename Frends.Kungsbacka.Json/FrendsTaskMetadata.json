@@ -1,0 +1,28 @@
+﻿{
+	"Tasks": [
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Validate"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Handlebars"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Query"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.QuerySingle"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertJsonStringToJToken"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlStringToJToken"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlBytesToJToken"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Map"
+		}
+	]
+}
