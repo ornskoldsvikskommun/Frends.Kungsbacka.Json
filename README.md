@@ -25,7 +25,7 @@ Handlebars templates and partials. The angle brackets gets replaced with curly b
 the template is passed to Handlebars. This means that the template or partial no longer has
 to be an expression with a verbatim string (@"template"), but can be text instead. This makes
 it possible to use Frends expression syntax directly inside templates without
-adding an extra task to first create the template. **Please note that this feature isexperimental.**
+adding an extra task to first create the template. **Please note that this feature is experimental.**
 More tests are needed.
 
 [Handlebars.NET] (https://github.com/Handlebars-Net/Handlebars.Net) supports adding custom helper
