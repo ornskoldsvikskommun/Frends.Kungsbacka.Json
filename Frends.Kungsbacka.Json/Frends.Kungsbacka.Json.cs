@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -17,25 +16,6 @@ namespace Frends.Kungsbacka.Json
     /// </summary>
     public static class JsonTasks
     {
-        private static readonly Regex anglebracketsRegex;
-        private static readonly MatchEvaluator replaceAnglebracketsWithCurlyBraces;
-
-        static JsonTasks()
-        {
-            // This is a crude attempt to support alternative template brackets.
-            // You should never use regex to parse text. I still think it
-            // will be useful, but consider it experimantal.
-            anglebracketsRegex = new Regex(@"(^|[^\\])(\[\[)([^\]]*)(\]\])|(\\\[)", RegexOptions.Compiled);
-            replaceAnglebracketsWithCurlyBraces = new MatchEvaluator((m) =>
-            {
-                if (m.Groups[0].Value == "\\[")
-                {
-                    return "[";
-                }
-                return m.Groups[1].Value + "{{" + m.Groups[3].Value + "}}";
-            });
-        }
-
         /// <summary>
         /// Validates Json against supplied schema
         /// Documentation: https://github.com/RicoSuter/NJsonSchema
@@ -121,7 +101,7 @@ namespace Frends.Kungsbacka.Json
             bool useAngleBrackets = options != null && options.UseAngleBrackets;
             if (useAngleBrackets)
             {
-                input.HandlebarsTemplate = anglebracketsRegex.Replace(input.HandlebarsTemplate, replaceAnglebracketsWithCurlyBraces);
+                input.HandlebarsTemplate = Helpers.ReplaceAngleBracketsWithCurlyBraces(input.HandlebarsTemplate);
             }
 
             var handlebars = HandlebarsDotNet.Handlebars.Create();
@@ -162,7 +142,7 @@ namespace Frends.Kungsbacka.Json
                 {
                     if (useAngleBrackets)
                     {
-                        partial.Template = anglebracketsRegex.Replace(partial.Template, replaceAnglebracketsWithCurlyBraces);
+                        partial.Template = Helpers.ReplaceAngleBracketsWithCurlyBraces(partial.Template);
                     }
                     using (var reader = new StringReader(partial.Template))
                     {
@@ -274,8 +254,8 @@ namespace Frends.Kungsbacka.Json
                 }
                 string from = mapping.From;
                 string to = mapping.To;
-                bool keepExistingValue = EndsWithChar(ref to, '*');
-                bool useSelectToken = StartsWithChar(ref from, '$');
+                bool keepExistingValue = Helpers.EndsWithChar(ref to, '*');
+                bool useSelectToken = Helpers.StartsWithChar(ref from, '$');
                 if (keepExistingValue && input.DestinationObject.Properties().Any(p => p.Name.IEquals(to)))
                 {
                     continue;
@@ -371,7 +351,7 @@ namespace Frends.Kungsbacka.Json
             }
             if (!handlebars.Configuration.Helpers.ContainsKey("lcase"))
             {
-                handlebars.RegisterHelper("ucase", (writer, context, arguments) =>
+                handlebars.RegisterHelper("lcase", (writer, context, arguments) =>
                 {
                     foreach (object arg in arguments)
                     {
@@ -382,54 +362,19 @@ namespace Frends.Kungsbacka.Json
                     }
                 });
             }
-        }
-
-        // Returns true if str ends with char c and removes c from end of str.
-        // Escape char by doubling up. Examples (if c = '*'):
-        // 1: "value*" returns true and str is changed to "value"
-        // 2: "value**" returns false and str is changed to "value*"
-        // 3: "value***" returns true and str is changed to "value*"
-        // 4: "value****" returns false and str is changed to "value**"
-        private static bool EndsWithChar(ref string str, char c)
-        {
-            if (string.IsNullOrEmpty(str))
+            if (!handlebars.Configuration.Helpers.ContainsKey("trim"))
             {
-                return false;
+                handlebars.RegisterHelper("trim", (writer, context, arguments) =>
+                {
+                    foreach (object arg in arguments)
+                    {
+                        if (arg is JToken token)
+                        {
+                            writer.Write(token.Value<string>()?.Trim());
+                        }
+                    }
+                });
             }
-            int len = str.Length;
-            int pos = len - 1;
-            while (pos >= 0 && str[pos] == c)
-            {
-                pos--;
-            }
-            bool b = ((len - pos) % 2) == 0;
-            if (pos < len - 1)
-            {
-                str = str.Substring(0, len - (len - pos) / 2);
-            }
-            return b;
-        }
-
-        // Same as EndsWithChar above, but from the start of the string.
-        private static bool StartsWithChar(ref string str, char c)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return false;
-            }
-            int len = str.Length;
-            int pos = 0;
-            while (pos < len && str[pos] == c)
-            {
-                pos++;
-            }
-            bool b = (pos % 2) == 1;
-            if (pos >= 0)
-            {
-                int cnt = pos == 1 ? 1 : pos / 2;
-                str = str.Substring(cnt, len - cnt);
-            }
-            return b;
         }
     }
 }
