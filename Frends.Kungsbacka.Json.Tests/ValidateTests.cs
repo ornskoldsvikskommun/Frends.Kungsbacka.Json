@@ -9,7 +9,7 @@ using System.Threading;
 namespace Frends.Kungsbacka.Json.Tests
 {
     [TestFixture]
-    class JsonSchemaTests
+    class ValidateTests
     {
         const string ValidUserJson = @"{
               'name': 'Arnie Admin',
@@ -27,7 +27,7 @@ namespace Frends.Kungsbacka.Json.Tests
         [Test]
         public void JsonShouldValidate()
         {
-            var result = JsonTasks.Validate(
+            var result = ValidateTask.Validate(
                 new ValidateInput() { Json = ValidUserJson, Schema = ValidUserSchema },
                 new ValidateOptions(),
                 CancellationToken.None)
@@ -52,7 +52,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var result = JsonTasks.Validate(
+            var result = ValidateTask.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions(),
                 CancellationToken.None)
@@ -77,7 +77,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var ex = Assert.Throws<JsonReaderException>(() => JsonTasks.Validate(
+            var ex = Assert.Throws<JsonReaderException>(() => ValidateTask.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions() { ThrowOnInvalidJson = true },
                 CancellationToken.None)
@@ -102,7 +102,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var result = JsonTasks.Validate(
+            var result = ValidateTask.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions(),
                 CancellationToken.None)
@@ -128,7 +128,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var ex = Assert.Throws<JsonException>(() => JsonTasks.Validate(
+            var ex = Assert.Throws<JsonException>(() => ValidateTask.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions() { ThrowOnInvalidJson = true },
                 CancellationToken.None)

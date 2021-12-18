@@ -1,28 +1,28 @@
 ﻿{
 	"Tasks": [
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Validate"
+			"TaskMethod": "Frends.Kungsbacka.Json.ValidateTask.Validate"
 		},
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Handlebars"
+			"TaskMethod": "Frends.Kungsbacka.Json.HandlebarsTask.Handlebars"
 		},
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Query"
+			"TaskMethod": "Frends.Kungsbacka.Json.QueryTask.Query"
 		},
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.QuerySingle"
+			"TaskMethod": "Frends.Kungsbacka.Json.QueryTask.QuerySingle"
 		},
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertJsonStringToJToken"
+			"TaskMethod": "Frends.Kungsbacka.Json.ConvertTask.ConvertJsonStringToJToken"
 		},
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlStringToJToken"
+			"TaskMethod": "Frends.Kungsbacka.Json.ConvertTask.ConvertXmlStringToJToken"
 		},
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlBytesToJToken"
+			"TaskMethod": "Frends.Kungsbacka.Json.ConvertTask.ConvertXmlBytesToJToken"
 		},
 		{
-			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Map"
+			"TaskMethod": "Frends.Kungsbacka.Json.MapTask.Map"
 		}
 	]
 }

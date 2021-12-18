@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Frends.Kungsbacka.Json
 {
-    internal static class Helpers
+    internal static class TaskHelper
     {
         private static readonly Regex anglebracketsRegex;
 
-        static Helpers()
+        static TaskHelper()
         {
             // This is an attempt to support alternative template brackets by using regex
             // with balanced groups. You should never use regex to parse text, but it
@@ -17,6 +17,28 @@ namespace Frends.Kungsbacka.Json
             anglebracketsRegex = new Regex(@"(?<expr>\[\[)[^\[\]]*(?<-expr>\]\])", RegexOptions.Compiled);
         }
 
+        public static object GetJTokenFromInput(dynamic json)
+        {
+            if (json is string)
+            {
+                return JToken.Parse(json);
+            }
+
+            if (json is JToken)
+            {
+                return json;
+            }
+
+            try
+            {
+                return (JToken)JsonConvert.DeserializeObject(json);
+            }
+            catch
+            {
+                throw new InvalidDataException("The input data was not recognized. Supported formats are JSON string, JToken or a deserializable object.");
+            }
+        }
+        
         public static string ReplaceAngleBracketsWithCurlyBraces(string input)
         {
             var sb = new System.Text.StringBuilder(input);
