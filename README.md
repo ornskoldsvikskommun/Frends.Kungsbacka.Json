@@ -22,12 +22,11 @@ to [NJsonSchema](https://github.com/RicoSuter/NJsonSchema).
 
 Handlebars now supports using [[angle brackets]] instead of {{curly braces}} in
 Handlebars templates and partials. The angle brackets gets replaced with curly braces before
-the template is passed to Handlebars. This means that the template or partial no longer has
-to be an expression with a verbatim string (@"template"), but can be text instead. This makes
-it possible to use Frends expression syntax directly inside templates without
-adding an extra task to first create the template. The feature relies on regex with balanced
-groups and not a full parser. It supports escaping, but there will likely be corner cases
-that will fail.
+the template is passed to Handlebars. When using angle brackets the template or partial no longer
+has to be an expression with a verbatim string (@"template"), but can be text instead. This opens
+up the possibility to use Frends expression syntax directly inside templates without adding an extra
+task to create the template. The feature relies on regex with balanced groups and does not use
+a full parser. It supports escaping, but there will likely be corner cases that will fail.
 
 [Handlebars.NET](https://github.com/Handlebars-Net/Handlebars.Net) supports adding custom helper
 functions. This is now exposed in the Handlebars task. Custom helpers are declared inside a C#
