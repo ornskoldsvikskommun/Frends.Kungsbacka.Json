@@ -45,7 +45,7 @@ useful when you can't know the Xml encoding without parsing the Xml declaration.
 task you don't have to convert the Xml content to a string before converting it to Json.
 Instead you let `System.Xml.XmlDocument` figure out the encoding.
 
-### Query, QuerySingle, 
+### Query, QuerySingle, ConvertJsonStringToJToken and ConvertXmlStringToJToken
 
 Query, QuerySingle, ConvertJsonStringToJToken and ConvertXmlStringToJToken should all work as
 they do in Frends.Json with the addition of being able to deserialize more types of input
