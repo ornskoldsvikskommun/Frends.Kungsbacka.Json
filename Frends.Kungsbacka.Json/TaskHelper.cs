@@ -19,26 +19,13 @@ namespace Frends.Kungsbacka.Json
 
         public static object GetJTokenFromInput(dynamic json)
         {
-            if (json is string)
-            {
-                return JToken.Parse(json);
-            }
-
             if (json is JToken)
             {
                 return json;
             }
-
-            try
-            {
-                return (JToken)JsonConvert.DeserializeObject(json);
-            }
-            catch
-            {
-                throw new InvalidDataException("The input data was not recognized. Supported formats are JSON string, JToken or a deserializable object.");
-            }
+            return JToken.Parse(json.ToString());
         }
-        
+
         public static string ReplaceAngleBracketsWithCurlyBraces(string input)
         {
             var sb = new System.Text.StringBuilder(input);

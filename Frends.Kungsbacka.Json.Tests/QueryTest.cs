@@ -41,6 +41,14 @@ namespace Frends.Kungsbacka.Json.Tests
             ]
         }";
 
+        public class DeserializableObject
+        {
+            public override string ToString()
+            {
+                return jsonString;
+            }
+        }
+
         [Test]
         public void QueryShouldWorkWithStringInput()
         {
@@ -56,6 +64,15 @@ namespace Frends.Kungsbacka.Json.Tests
             const string query = "$..Products[?(@.Price >= 50)].Name";
             var jtoken = JToken.Parse(jsonString);
             var result = (IEnumerable<JToken>)QueryTask.Query(new QueryInput() { Json = jtoken, Query = query }, new QueryOptions());
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("Anvil", result.First().Value<string>());
+        }
+
+        [Test]
+        public void QueryShouldWorkWithDeserializableObjectInput()
+        {
+            const string query = "$..Products[?(@.Price >= 50)].Name";
+            var result = (IEnumerable<JToken>)QueryTask.Query(new QueryInput() { Json = new DeserializableObject(), Query = query }, new QueryOptions());
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("Anvil", result.First().Value<string>());
         }

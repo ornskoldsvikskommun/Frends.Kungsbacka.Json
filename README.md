@@ -6,12 +6,12 @@ This is a replacement for Frends.Json.
 
 ### All tasks
 
-Frends.Json has a method for converting to JToken. Currently it supports string and
-JToken. Frends.Kungsbacka.Json adds support for any deserializable object. This includes
-`CaseInsensitivePropertyTree` which is the object Frends use to deserialize data coming
-from another process (i.g. invoking a sub process). `CaseInsensitivePropertyTree` is also
-used for trigger parameters. This removes the need to manually deserialize data passed
-between processes before passing it to a Json task.
+Frends.Json has a method for converting input to JToken. Currently it supports string and JToken.
+Frends.Kungsbacka.Json changes this slightly to support all objects where `ToString()` returns
+the object serialized as Json. This includes `CaseInsensitivePropertyTree` which is the object
+Frends use to deserialize data coming from another process (i.g. invoking a sub process).
+`CaseInsensitivePropertyTree` is also used for trigger parameters. This removes the need to
+manually deserialize data passed between processes before passing it to a Json task.
 
 ### Validate task
 
@@ -25,8 +25,9 @@ Handlebars templates and partials. The angle brackets gets replaced with curly b
 the template is passed to Handlebars. This means that the template or partial no longer has
 to be an expression with a verbatim string (@"template"), but can be text instead. This makes
 it possible to use Frends expression syntax directly inside templates without
-adding an extra task to first create the template. **Please note that this feature is experimental.**
-More tests are needed.
+adding an extra task to first create the template. The feature relies on regex with balanced
+groups and not a full parser. It supports escaping, but there will likely be corner cases
+that will fail.
 
 [Handlebars.NET](https://github.com/Handlebars-Net/Handlebars.Net) supports adding custom helper
 functions. This is now exposed in the Handlebars task. Custom helpers are declared inside a C#
