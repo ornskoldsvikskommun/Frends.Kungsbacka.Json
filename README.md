@@ -71,7 +71,7 @@ mode to text, Xml or Json and remove the verbatime string.
 
 Handlebars.Net does not support angle brackets and there is no way to tell Handlebars.Net to
 use angle brackets instead of curly braces. Before the template is sent to Handlebars for
-compilation all angle brackets are replaced with curly braces. This is done using regular
+compilation, angle brackets are replaced with curly braces. This is done using regular
 expressions with balanced groups and a little bit of extra parsing. Handlebars.Net uses a
 "real" parser and not regex, so don't expect angle brackets to behave exactly the same as
 using curly braces directly. But it will work fine for most cases.
