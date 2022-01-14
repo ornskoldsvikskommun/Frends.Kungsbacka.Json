@@ -88,8 +88,8 @@ that uses angle brackets.
 </Person>
 ```
 
-Before it's compiled by Handlebars Frends will process all code elements and then all angle
-brackets are replaced by curly braces.
+Before it's compiled by Handlebars Frends will process all code elements and then replace
+all angle brackets with curly braces. The resulting template will look something like this:
 
 
 ```xml
