@@ -142,7 +142,7 @@ A map can look something like this:
 ```
 
 This will output a new JObject where *firstname* from the source object is mapped to *givenname*
-in the target object and *lastname is mapped to *surname*. If no target object is supplied, a new
+in the target object and *lastname* is mapped to *surname*. If no target object is supplied, a new
 JObject will be created.
 
 #### Default value
