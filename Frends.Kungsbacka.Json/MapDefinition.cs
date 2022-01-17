@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Frends.Kungsbacka.Json
@@ -59,6 +61,25 @@ namespace Frends.Kungsbacka.Json
         /// </summary>
         [DefaultValue(false)]
         public bool UnpackCdataSection { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public MapTransformation[] Tranformations { get; set; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MapTransformation
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TransformationName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public dynamic TransformationAction { get; set; }
+    }
 }

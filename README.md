@@ -101,7 +101,16 @@ all angle brackets with curly braces. The resulting template will look something
 </Person>
 ```
 
-### Custom Helper for Handlebars
+### Custom Helpers for Handlebars
+
+Handlebars.Net supports custom helpers and this functionallity is exposed in the Handlebars
+task. The way you define a custom helper is by creating a delegate of one of the following types:
+`Action<System.IO.TextWriter,dynamic,object[]>` or if its a block helper
+`Action<System.IO.TextWriter,dynamic,dynamic,object[]>`.
+`System.IO.TextWriter` must include the namespace since `System.IO` is not one of the namespaces
+included in a process.
+
+You can copy and paste the following into a helper action...
 
 ```C#
 new Action<System.IO.TextWriter, dynamic, object[]>((writer, context, arguments) =>
@@ -112,8 +121,6 @@ new Action<System.IO.TextWriter, dynamic, object[]>((writer, context, arguments)
 })
 ```
 
-### Custom Block Helper for Handlebars
-
 ```C#
 new Action<System.IO.TextWriter, dynamic, dynamic, object[]>((writer, options, context, arguments) =>
 {
@@ -122,8 +129,99 @@ new Action<System.IO.TextWriter, dynamic, dynamic, object[]>((writer, options, c
 
 ### Map
 
-...
+The purpouse of Map is to take one JObject and convert it to another JObject. It supports
+tranformations (both custom and Built-in) and default values.
+
+A map can look something like this:
+
+```JSON
+[
+    {"from": "firstname", "to": "givenname"},
+    {"from": "lastname", "to": "surname"}
+]
+```
+
+This will output a new JObject where *firstname* from the source object is mapped to *givenname*
+in the target object and *lastname is mapped to *surname*. If no target object is supplied, a new
+JObject will be created.
+
+#### Default value
+
+Map supports default values that is used only if a property does not exist at all or if the
+property exists and the value is null. A map with default value can look like the example below.
+
+```JSON
+[
+    {"from": "firstname", "to": "givenname"},
+    {"from": "lastname", "to": "surname"},
+    {"from": "role", "to": "role", "def": "User"}
+]
+```
+
+Note that *from* and *to* maps to the same name. This is not required when using default values,
+but it shows a common use case for default values where you just want to give an existing property
+a default value without renaming it.
+
+#### Do not overwrite
+
+If an existing object is supplied as the target object, you can tell map not to overwrite the
+target property value if it already exists. You do this by adding an asterisk (*) to the end
+of the target property name.
+
+```JSON
+[
+    {"from": "firstname", "to": "givenname"},
+    {"from": "lastname", "to": "surname"},
+    {"from": "role", "to": "role", "def": "User"},
+    {"from": "status", "to": "user_status*"}
+]
+```
+
+If *user_status* already exists in the target object, it will not be overwritten by the
+value of *status* in the source object.
+
+#### Transformations
+
+Map can transform a value before it is added to the target object. There are both Built-in
+transformations and support for adding custom transformations.
+
+The built-in transformations currently available are: *LCase*, *UCase*, *Trim*, *SweSsn* (format as
+Swedish personnummer ("SSN")) and *SweOrgNr* (format as Swedish organization number (organisationsnummer)). 
+
+The example below uses the LCase transformation to make the value lower case.
+
+```JSON
+[
+    {"from": "firstname", "to": "givenname"},
+    {"from": "lastname", "to": "surname"},
+    {"from": "role", "to": "role", "def": "User"},
+    {"from": "status", "to": "user_status*"}
+    {"from": "lang", "to": "language", "trans": "LCase"}
+]
+```
+
+Map also supports custom transformations supplied in the task optional parameters.
+The transformation action is a delegate that takes a `JToken` and returns a `JToken` (`Func<JToken, JToken>`).
+
+Below is an example of a transformation that joins all elements in a JArray and returns a new string value.
+
+```C#
+new Func<JToken, JToken>((input) =>
+{
+    if (input is JArray array)
+    {
+        return string.Join(";", array);
+    }
+    return input;
+});
+```
 
 ### ConvertXmlBytesToJToken
 
-...
+ConvertXmlBytesToJToken does the same thing as ConvertXmlStringToJToken but takes a byte array
+instead of a string as input. The byte array is used to construct a `System.Xml.XmlDocument`
+that is then serialized to Json with `JsonConvert.SerializeXmlNode`. This is the same thing
+ConvertXmlStringToJToken does, but with a string. This is useful in scenarios where you don't
+know how the Xml is encoded without looking at the Xml declaration (when you get a Http content
+type without charset for example). This way you skip the steps of figuring out the encoding and
+converting the Xml to a string before passing it to the converter.

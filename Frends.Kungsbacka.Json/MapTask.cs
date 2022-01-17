@@ -77,6 +77,14 @@ namespace Frends.Kungsbacka.Json
             {
                 throw new ArgumentException("Map cannot be null or an empty string.", nameof(input.Map));
             }
+            MapTransformations.RegisterBuiltInTransformations();
+            if (options?.Tranformations != null)
+            {
+                foreach (MapTransformation transformation in options.Tranformations)
+                {
+                    MapTransformations.RegisterTransformation(transformation);
+                }
+            }
             var mappings = JsonConvert.DeserializeObject<Mapping[]>(input.Map);
             foreach (var mapping in mappings)
             {

@@ -21,7 +21,8 @@ namespace Frends.Kungsbacka.Json.Tests
             },
             ""propWithCdata"": {
                 ""#cdata-section"": ""value""
-            }
+            },
+            ""array"": [1, 2, 3]
         }");
 
         [Test]
@@ -209,6 +210,31 @@ namespace Frends.Kungsbacka.Json.Tests
             ]";
             dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("12345678-9012", (string)result.sweSsn);
+        }
+
+        [Test] 
+        public void UseCustomTransformation()
+        {
+            string map = @"[
+                {""from"": ""firstname"", ""to"": ""firstname"", ""trans"": [""UCase""]}
+            ]";
+
+            var options = new MapOptions()
+            {
+                Tranformations = new[]
+                {
+                    new MapTransformation()
+                    {
+                        TransformationName = "UCase",
+                        TransformationAction = new Func<JToken, JToken>((input) =>
+                        {
+                            return input?.Value<string>()?.ToUpper();
+                        })
+                    }
+                }
+            };
+            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, options);
+            Assert.AreEqual("JOHN", (string)result.firstname);
         }
 
         [Test]
