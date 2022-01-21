@@ -145,6 +145,33 @@ This will output a new JObject where *firstname* from the source object is mappe
 in the target object and *lastname is mapped to *surname*. If no target object is supplied, a new
 JObject will be created.
 
+#### SelectToken
+
+JToken har a `SelectToken` method that can be used to query a JObject
+([more details here](https://www.newtonsoft.com/json/help/html/SelectToken.htm)). To use
+`SelectToken` to select what is mapped, you prefix the source name with a question mark (?).
+The example below uses JSONPath syntax.
+
+```JSON
+[
+    {"from": "firstname", "to": "givenname"},
+    {"from": "lastname", "to": "surname"},
+    {"from": "?$.addresses[0].zipCode}", "to": "zipCode"}
+]
+```
+
+If a source name starts with a question mark, you double up to avoid using SelectToken. In the
+example below the name `"??optional"` becomes `"?optional"` and that name is used when selecting
+the property, not SelectToken.
+
+```JSON
+[
+    {"from": "firstname", "to": "givenname"},
+    {"from": "lastname", "to": "surname"},
+    {"from": "??optional", "to": "optional"}
+]
+```
+
 #### Default value
 
 Map supports default values that is used only if a property does not exist at all or if the
@@ -154,6 +181,7 @@ property exists and the value is null. A map with default value can look like th
 [
     {"from": "firstname", "to": "givenname"},
     {"from": "lastname", "to": "surname"},
+    {"from": "?$.addresses[0].zipCode}", "to": "zipCode"},
     {"from": "role", "to": "role", "def": "User"}
 ]
 ```
@@ -165,20 +193,23 @@ a default value without renaming it.
 #### Do not overwrite
 
 If an existing object is supplied as the target object, you can tell map not to overwrite the
-target property value if it already exists. You do this by adding an asterisk (*) to the end
-of the target property name.
+target property value if it already exists. You do this by adding an exclamation mark (!) to the
+end of the target property name.
 
 ```JSON
 [
     {"from": "firstname", "to": "givenname"},
     {"from": "lastname", "to": "surname"},
+    {"from": "?$.addresses[0].zipCode}", "to": "zipCode"},
     {"from": "role", "to": "role", "def": "User"},
-    {"from": "status", "to": "user_status*"}
+    {"from": "status", "to": "user_status!"}
 ]
 ```
 
 If *user_status* already exists in the target object, it will not be overwritten by the
 value of *status* in the source object.
+
+As with `SelectToken` above, you can double up if you want to escape the exclamation mark.
 
 #### Transformations
 
@@ -194,8 +225,9 @@ The example below uses the LCase transformation to make the value lower case.
 [
     {"from": "firstname", "to": "givenname"},
     {"from": "lastname", "to": "surname"},
+    {"from": "?$.addresses[0].zipCode}", "to": "zipCode"},
     {"from": "role", "to": "role", "def": "User"},
-    {"from": "status", "to": "user_status*"}
+    {"from": "status", "to": "user_status*"},
     {"from": "lang", "to": "language", "trans": "LCase"}
 ]
 ```

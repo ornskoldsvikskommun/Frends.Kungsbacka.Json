@@ -98,8 +98,8 @@ namespace Frends.Kungsbacka.Json
                 }
                 string from = mapping.From;
                 string to = mapping.To;
-                bool keepExistingValue = TaskHelper.EndsWithChar(ref to, '*');
-                bool useSelectToken = TaskHelper.StartsWithChar(ref from, '$');
+                bool keepExistingValue = TaskHelper.EndsWithChar(ref to, '!');
+                bool useSelectToken = TaskHelper.StartsWithChar(ref from, '?');
                 if (keepExistingValue && input.DestinationObject.Properties().Any(p => p.Name.IEquals(to)))
                 {
                     continue;

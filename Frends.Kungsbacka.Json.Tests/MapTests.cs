@@ -12,17 +12,13 @@ namespace Frends.Kungsbacka.Json.Tests
         readonly JObject sourceObject = JObject.Parse(@"{
             ""firstname"": ""John"",
             ""lastname"": ""Doe"",
-            ""ssn"": 1234567890,
-            ""longSsn"": 123456789012,
-            ""valueWithSpaces"": ""   value   "",
-            ""$propWithDollarSign"": ""value"",
+            ""?propWithQuestionMark"": ""value"",
             ""nestedObject"": {
                 ""prop"": ""value""
             },
             ""propWithCdata"": {
                 ""#cdata-section"": ""value""
-            },
-            ""array"": [1, 2, 3]
+            }
         }");
 
         [Test]
@@ -144,11 +140,11 @@ namespace Frends.Kungsbacka.Json.Tests
         }
 
         [Test]
-        public void UseQuerySyntaxToSelectSource()
+        public void UseSelectTokenToSelectSource()
         {
             string map = @"[
-                {""from"": ""$.nestedObject.prop"", ""to"": ""destProp""},
-                {""from"": ""$.lastname"", ""to"": ""surname""}
+                {""from"": ""?$.nestedObject.prop"", ""to"": ""destProp""},
+                {""from"": ""?$.lastname"", ""to"": ""surname""}
             ]";
 
             dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
@@ -157,10 +153,10 @@ namespace Frends.Kungsbacka.Json.Tests
         }
 
         [Test]
-        public void EscapeDollarSignInSourceName()
+        public void EscapeQuerstionMarknInSourceName()
         {
             string map = @"[
-                {""from"": ""$$propWithDollarSign"", ""to"": ""destProp""}
+                {""from"": ""??propWithQuestionMark"", ""to"": ""destProp""}
             ]";
 
             dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
@@ -168,48 +164,18 @@ namespace Frends.Kungsbacka.Json.Tests
         }
 
         [Test]
-        public void EscapeStarInDestinationName()
+        public void EscapeExclamationMarkInDestinationName()
         {
             dynamic destObject = JObject.Parse(@"{
-                ""givenname*"": ""Jane""
+                ""givenname!"": ""Jane""
             }");
 
             string map = @"[
-                {""from"": ""firstname"", ""to"": ""givenname**""}
+                {""from"": ""firstname"", ""to"": ""givenname!!""}
             ]";
-            Assert.AreEqual("Jane", (string)destObject["givenname*"]);
+            Assert.AreEqual("Jane", (string)destObject["givenname!"]);
             MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = destObject, Map = map }, null);
-            Assert.AreEqual("John", (string)destObject["givenname*"]);
-        }
-
-        [Test]
-        public void TestTrimTransformation()
-        {
-            string map = @"[
-                {""from"": ""valueWithSpaces"", ""to"": ""trimmed"", ""trans"": [""Trim""]}
-            ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
-            Assert.AreEqual("value", (string)result.trimmed);
-        }
-
-        [Test]
-        public void TestSweSsnTransformationShortSsn()
-        {
-            string map = @"[
-                {""from"": ""ssn"", ""to"": ""sweSsn"", ""trans"": [""SweSsn""]}
-            ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
-            Assert.AreEqual("123456-7890", (string)result.sweSsn);
-        }
-
-        [Test]
-        public void TestSweSsnTransformationLongSsn()
-        {
-            string map = @"[
-                {""from"": ""longSsn"", ""to"": ""sweSsn"", ""trans"": [""SweSsn""]}
-            ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
-            Assert.AreEqual("12345678-9012", (string)result.sweSsn);
+            Assert.AreEqual("John", (string)destObject["givenname!"]);
         }
 
         [Test] 

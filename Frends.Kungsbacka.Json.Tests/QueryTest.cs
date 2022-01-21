@@ -7,7 +7,7 @@ using System.Linq;
 namespace Frends.Kungsbacka.Json.Tests
 {
     [TestFixture]
-    class JsonToXml
+    class QueryTests
     {
         private const string jsonString = @"{
             'Stores': [

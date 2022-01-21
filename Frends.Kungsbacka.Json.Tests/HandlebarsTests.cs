@@ -5,7 +5,7 @@ using System;
 namespace Frends.Kungsbacka.Json.Tests
 {
     [TestFixture]
-    class TestClass
+    class HandlebarsTests
     {
         private const string jsonString = @"{
             'Stores': [
