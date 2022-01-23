@@ -26,7 +26,7 @@ namespace Frends.Kungsbacka.Json
 
         public static void RegisterTransformation(MapTransformation transformation)
         {
-            RegisterTransformation(transformation.TransformationName, transformation.TransformationAction);
+            RegisterTransformation(transformation.TransformationName, transformation.TransformationFunction);
         }
 
         private static void RegisterTransformation(string name, dynamic transformation)

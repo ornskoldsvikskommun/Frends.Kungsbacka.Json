@@ -63,23 +63,38 @@ namespace Frends.Kungsbacka.Json
         public bool UnpackCdataSection { get; set; }
 
         /// <summary>
-        /// 
+        /// Array of custom transformations
         /// </summary>
         public MapTransformation[] Tranformations { get; set; }
     }
 
     /// <summary>
-    /// 
+    /// Custom transformation
     /// </summary>
     public class MapTransformation
     {
         /// <summary>
-        /// 
+        /// Transformation name
         /// </summary>
         public string TransformationName { get; set; }
+
         /// <summary>
-        /// 
+        /// Transformation function. Must be a Func&lt;JToken&gt;
+        /// Example function that takes the first element in an array.
+        /// <code>
+        /// return new Func&lt;JToken&gt;((input) =>
+        /// {
+        ///     if (input is JArray array)
+        ///     {
+        ///         if (array.Count > 0)
+        ///         {
+        ///             return array[0];
+        ///         }
+        ///     }
+        ///     return null;
+        /// });
+        /// </code>
         /// </summary>
-        public dynamic TransformationAction { get; set; }
+        public dynamic TransformationFunction { get; set; }
     }
 }

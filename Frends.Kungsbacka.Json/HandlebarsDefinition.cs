@@ -84,7 +84,6 @@ namespace Frends.Kungsbacka.Json
 
         /// <summary>
         /// Helper action. Must be an Action&lt;String.IO.TextWriter, dynamic, object[]&gt;
-        /// Create a helper using a C# statement i FRENDS.
         /// <code>
         /// return new Action&lt;System.IO.TextWriter, dynamic, object[]&gt;((writer, context, parameters) => {
         ///     foreach (object param in parameters)
@@ -113,7 +112,6 @@ namespace Frends.Kungsbacka.Json
 
         /// <summary>
         /// Helper action. Must be an Action&lt;String.IO.TextWriter, dynamic, dynamic, object[]&gt;
-        /// Create a helper using a C# statement i FRENDS.
         /// <code>
         /// return new Action&lt;System.IO.TextWriter, dynamic, object[]&gt;((writer, options, context, parameters) => {
         ///     if (some condition)

@@ -233,9 +233,9 @@ The example below uses the LCase transformation to make the value lower case.
 ```
 
 Map also supports custom transformations supplied in the task optional parameters.
-The transformation action is a delegate that takes a `JToken` and returns a `JToken` (`Func<JToken, JToken>`).
+The transformation function is a delegate of type `Func<JToken, JToken>` (takes a `JToken` and returns a `JToken`).
 
-Below is an example of a transformation that joins all elements in a JArray and returns a new string value.
+Below is an example transformation that joins all elements in a `JArray` and returns a new `string` value.
 
 ```C#
 new Func<JToken, JToken>((input) =>
