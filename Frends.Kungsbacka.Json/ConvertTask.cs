@@ -8,7 +8,7 @@ namespace Frends.Kungsbacka.Json
     /// <summary>
     /// JsonSchema Tasks
     /// </summary>
-    public static class ConvertTask
+    public static partial class JsonTasks
     {
         /// <summary>
         /// Convert a json string to JToken

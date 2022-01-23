@@ -24,7 +24,7 @@ namespace Frends.Kungsbacka.Json.Tests
         [Test]
         public void ShouldThrowIfMapIsNull()
         {
-            Assert.Throws(typeof(ArgumentException), () => MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = null }, null));
+            Assert.Throws(typeof(ArgumentException), () => JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = null }, null));
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""lastname"", ""to"": ""surname""}
             ]";
 
-            Assert.Throws(typeof(ArgumentNullException), () => MapTask.Map(new MapInput() { SourceObject = null, DestinationObject = null, Map = map }, null));
+            Assert.Throws(typeof(ArgumentNullException), () => JsonTasks.Map(new MapInput() { SourceObject = null, DestinationObject = null, Map = map }, null));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 ""firstname"": ""John"",            
             }");
 
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = source, DestinationObject = source, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = source, DestinationObject = source, Map = map }, null);
             Assert.AreSame(source, result);
         }
 
@@ -58,9 +58,9 @@ namespace Frends.Kungsbacka.Json.Tests
         {
             string map = @"[]";
 
-            var result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            var result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.IsInstanceOf<JObject>(result);
-            Assert.DoesNotThrow(() => MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null));
+            Assert.DoesNotThrow(() => JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""to"": ""givenname""}
             ]";
 
-            Assert.Throws(typeof(JsonSerializationException), () => MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null));
+            Assert.Throws(typeof(JsonSerializationException), () => JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""lastname"", ""to"": ""surname""}
             ]";
 
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("John", (string)result.givenname);
             Assert.AreEqual("Doe", (string)result.surname);
         }
@@ -93,7 +93,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""scrore"", ""to"": ""points"", ""def"": 5}
             ]";
 
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual(5, (int)result.points);
         }
 
@@ -104,7 +104,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""score"", ""to"": ""points""}
             ]";
 
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.IsNull(result["points"]);
         }
 
@@ -120,7 +120,7 @@ namespace Frends.Kungsbacka.Json.Tests
             ]";
 
             Assert.AreEqual("Jane", (string)destObject.givenname);
-            MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = destObject, Map = map }, null);
+            JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = destObject, Map = map }, null);
             Assert.AreEqual("John", (string)destObject.givenname);
         }
 
@@ -135,7 +135,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""firstname"", ""to"": ""givenname*""}
             ]";
             Assert.AreEqual("Jane", (string)destObject.givenname);
-            MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = destObject, Map = map }, null);
+            JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = destObject, Map = map }, null);
             Assert.AreEqual("Jane", (string)destObject.givenname);
         }
 
@@ -147,7 +147,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""?$.lastname"", ""to"": ""surname""}
             ]";
 
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("value", (string)result.destProp);
             Assert.AreEqual("Doe", (string)result.surname);
         }
@@ -159,7 +159,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""??propWithQuestionMark"", ""to"": ""destProp""}
             ]";
 
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("value", (string)result.destProp);
         }
 
@@ -174,7 +174,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""firstname"", ""to"": ""givenname!!""}
             ]";
             Assert.AreEqual("Jane", (string)destObject["givenname!"]);
-            MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = destObject, Map = map }, null);
+            JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = destObject, Map = map }, null);
             Assert.AreEqual("John", (string)destObject["givenname!"]);
         }
 
@@ -192,14 +192,14 @@ namespace Frends.Kungsbacka.Json.Tests
                     new MapTransformation()
                     {
                         TransformationName = "UCase",
-                        TransformationAction = new Func<JToken, JToken>((input) =>
+                        TransformationFunction = new Func<JToken, JToken>((input) =>
                         {
                             return input?.Value<string>()?.ToUpper();
                         })
                     }
                 }
             };
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, options);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, options);
             Assert.AreEqual("JOHN", (string)result.firstname);
         }
 
@@ -209,7 +209,7 @@ namespace Frends.Kungsbacka.Json.Tests
             string map = @"[
                 {""from"": ""propWithCdata"", ""to"": ""dest""}
             ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, new MapOptions { UnpackCdataSection = true });
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, new MapOptions { UnpackCdataSection = true });
             Assert.AreEqual("value", (string)result.dest);
         }
 
@@ -219,7 +219,7 @@ namespace Frends.Kungsbacka.Json.Tests
             string map = @"[
                 {""from"": ""propWithCdata"", ""to"": ""dest""}
             ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, new MapOptions { UnpackCdataSection = false });
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, new MapOptions { UnpackCdataSection = false });
             Assert.IsInstanceOf<JObject>(result.dest);
         }
     }

@@ -21,7 +21,7 @@ namespace Frends.Kungsbacka.Json.Tests
         [Test]
         public void ShouldConvertXmlStringToJToken()
         {
-            var result = ConvertTask.ConvertXmlStringToJToken(xml);
+            var result = JsonTasks.ConvertXmlStringToJToken(xml);
             Assert.IsInstanceOf<JObject>(result);
         }
 
@@ -33,7 +33,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 ""LastName"": ""Doe""
             }";
             JToken token = JToken.Parse(json);
-            var result = ConvertTask.ConvertJsonStringToJToken(json);
+            var result = JsonTasks.ConvertJsonStringToJToken(json);
             Assert.AreEqual(token, result);
         }
 
@@ -41,7 +41,7 @@ namespace Frends.Kungsbacka.Json.Tests
         public void ShouldConvertXmlBytesToJToken()
         {
             var bytes = System.Text.Encoding.UTF8.GetBytes(xml);
-            var result = ConvertTask.ConvertXmlBytesToJToken(bytes);
+            var result = JsonTasks.ConvertXmlBytesToJToken(bytes);
             Assert.IsInstanceOf<JObject>(result);
         }
     }

@@ -24,7 +24,7 @@ namespace Frends.Kungsbacka.Json.Tests
         [Test]
         public void JsonShouldValidate()
         {
-            var result = ValidateTask.Validate(
+            var result = JsonTasks.Validate(
                 new ValidateInput() { Json = ValidUserJson, Schema = ValidUserSchema },
                 new ValidateOptions(),
                 CancellationToken.None)
@@ -49,7 +49,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var result = ValidateTask.Validate(
+            var result = JsonTasks.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions(),
                 CancellationToken.None)
@@ -74,7 +74,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var ex = Assert.Throws<JsonReaderException>(() => ValidateTask.Validate(
+            var ex = Assert.Throws<JsonReaderException>(() => JsonTasks.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions() { ThrowOnInvalidJson = true },
                 CancellationToken.None)
@@ -99,7 +99,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var result = ValidateTask.Validate(
+            var result = JsonTasks.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions(),
                 CancellationToken.None)
@@ -125,7 +125,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 'roles': {'type': 'object'}
               }
             }";
-            var ex = Assert.Throws<JsonException>(() => ValidateTask.Validate(
+            var ex = Assert.Throws<JsonException>(() => JsonTasks.Validate(
                 new ValidateInput() { Json = user, Schema = schema },
                 new ValidateOptions() { ThrowOnInvalidJson = true },
                 CancellationToken.None)

@@ -11,7 +11,7 @@ namespace Frends.Kungsbacka.Json
     /// <summary>
     /// JsonSchema Tasks
     /// </summary>
-    public static class MapTask
+    public static partial class JsonTasks
     {
         /// <summary>
         /// Maps properties from one JObject to another. A default value can be specified if the property

@@ -11,7 +11,7 @@ namespace Frends.Kungsbacka.Json
     /// <summary>
     /// JsonSchema Tasks
     /// </summary>
-    public static class ValidateTask
+    public static partial class JsonTasks
     {
         /// <summary>
         /// Validates Json against supplied schema

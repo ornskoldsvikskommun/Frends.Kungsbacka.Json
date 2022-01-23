@@ -25,7 +25,7 @@ namespace Frends.Kungsbacka.Json.Tests
             string map = @"[
                 {""from"": ""valueWithSpaces"", ""to"": ""trimmed"", ""trans"": [""Trim""]}
             ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("value", (string)result.trimmed);
         }
 
@@ -35,7 +35,7 @@ namespace Frends.Kungsbacka.Json.Tests
             string map = @"[
                 {""from"": ""upper"", ""to"": ""lower"", ""trans"": [""LCase""]}
             ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("value", (string)result.lower);
         }
 
@@ -45,7 +45,7 @@ namespace Frends.Kungsbacka.Json.Tests
             string map = @"[
                 {""from"": ""lower"", ""to"": ""upper"", ""trans"": [""UCase""]}
             ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("VALUE", (string)result.upper);
         }
 
@@ -58,7 +58,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""longNum"",        ""to"": ""sweSsn3"", ""trans"": [""SweSsn""]},
                 {""from"": ""longDashedNum"",  ""to"": ""sweSsn4"", ""trans"": [""SweSsn""]}
             ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("123456-7890", (string)result.sweSsn1);
             Assert.AreEqual("123456-7890", (string)result.sweSsn2);
             Assert.AreEqual("12345678-9012", (string)result.sweSsn3);
@@ -74,7 +74,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": ""longNum"",        ""to"": ""sweOrgNum3"", ""trans"": [""SweOrgNum""]},
                 {""from"": ""longDashedNum"",  ""to"": ""sweOrgNum4"", ""trans"": [""SweOrgNum""]}
             ]";
-            dynamic result = MapTask.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("16123456-7890", (string)result.sweOrgNum1);
             Assert.AreEqual("16123456-7890", (string)result.sweOrgNum2);
             Assert.AreEqual("12345678-9012", (string)result.sweOrgNum3);

@@ -44,7 +44,7 @@ namespace Frends.Kungsbacka.Json.Tests
             const string json = @"{'title':'Mr.', 'name':'Andersson'}";
             const string template =
             @"<div><span>{{title}}</span> <strong>{{name}}</strong></div>";
-            var result = HandlebarsTask.Handlebars(new HandlebarsInput() { Json = json, HandlebarsTemplate = template, HandlebarsPartials = new HandlebarsPartial[0] }, options: null);
+            var result = JsonTasks.Handlebars(new HandlebarsInput() { Json = json, HandlebarsTemplate = template, HandlebarsPartials = new HandlebarsPartial[0] }, options: null);
             Assert.True(result.IContains("<span>Mr.</span> <strong>Andersson</strong>"));
         }
 
@@ -55,7 +55,7 @@ namespace Frends.Kungsbacka.Json.Tests
             const string template =
             @"<div><span>{{title}}</span> {{> strongName}}</div>";
             var partials = new[] { new HandlebarsPartial { Template = "<strong>{{name}}</strong>", TemplateName = "strongName" } };
-            var result = HandlebarsTask.Handlebars(new HandlebarsInput() { Json = json, HandlebarsTemplate = template, HandlebarsPartials = partials }, options: null);
+            var result = JsonTasks.Handlebars(new HandlebarsInput() { Json = json, HandlebarsTemplate = template, HandlebarsPartials = partials }, options: null);
             Assert.True(result.IContains("<span>Mr.</span> <strong>Andersson</strong>"));
         }
 
@@ -82,7 +82,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 HandlebarsTemplate = "{{#each Stores}}{{filterStore .}}{{/each}}",
                 HandlebarsHelpers = new HandlebarsHelper[] { helper }
             };
-            var result = HandlebarsTask.Handlebars(input, null);
+            var result = JsonTasks.Handlebars(input, null);
             Assert.AreEqual("Willis Street", result);
         }
 
@@ -112,7 +112,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 HandlebarsTemplate = "{{#htmlList Stores}}{{.}}{{/htmlList}}",
                 HandlebarsBlockHelpers = new HandlebarsBlockHelper[] { helper }
             };
-            var result = HandlebarsTask.Handlebars(input, null);
+            var result = JsonTasks.Handlebars(input, null);
             Assert.AreEqual($"&lt;li&gt;Lambton Quay&lt;/li&gt;{Environment.NewLine}&lt;li&gt;Willis Street&lt;/li&gt;{Environment.NewLine}", result);
         }
 
@@ -128,7 +128,7 @@ namespace Frends.Kungsbacka.Json.Tests
             {
                 UseAngleBrackets = true
             };
-            var result = HandlebarsTask.Handlebars(input, options);
+            var result = JsonTasks.Handlebars(input, options);
             Assert.AreEqual("Anvil", result);
         }
 
@@ -144,7 +144,7 @@ namespace Frends.Kungsbacka.Json.Tests
             {
                 UseAngleBrackets = true
             };
-            var result = HandlebarsTask.Handlebars(input, options);
+            var result = JsonTasks.Handlebars(input, options);
             Assert.AreEqual("[[Escaped]]", result);
         }
 
@@ -160,7 +160,7 @@ namespace Frends.Kungsbacka.Json.Tests
             {
                 UseAngleBrackets = true
             };
-            var result = HandlebarsTask.Handlebars(input, options);
+            var result = JsonTasks.Handlebars(input, options);
             Assert.AreEqual(@"\[[Escaped]]", result);
         }
 
@@ -176,7 +176,7 @@ namespace Frends.Kungsbacka.Json.Tests
             {
                 UseAngleBrackets = true
             };
-            var result = HandlebarsTask.Handlebars(input, options);
+            var result = JsonTasks.Handlebars(input, options);
             Assert.AreEqual("[[Anvil]]", result);
         }
 
@@ -192,7 +192,7 @@ namespace Frends.Kungsbacka.Json.Tests
             {
                 UseAngleBrackets = true
             };
-            var result = HandlebarsTask.Handlebars(input, options);
+            var result = JsonTasks.Handlebars(input, options);
             Assert.AreEqual("Anvil.Anvil", result);
         }
 
@@ -204,7 +204,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 Json = jsonString,
                 HandlebarsTemplate = "{{#each Manufacturers.0.Products}}Product: {{Name}}{{#exists Quantity}}, Quantity: {{Quantity}}{{/exists}}, Price: {{Price}}{{/each}}"
             };
-            var result = HandlebarsTask.Handlebars(input, null);
+            var result = JsonTasks.Handlebars(input, null);
             Assert.AreEqual("Product: Anvil, Price: 50", result);
         }
 
@@ -216,7 +216,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 Json = jsonString,
                 HandlebarsTemplate = "{{trim Manufacturers.0.Products.0.Name}}"
             };
-            var result = HandlebarsTask.Handlebars(input, null);
+            var result = JsonTasks.Handlebars(input, null);
             Assert.AreEqual("Anvil", result);
         }
 
@@ -228,7 +228,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 Json = jsonString,
                 HandlebarsTemplate = "{{ucase Manufacturers.0.Products.0.Name}}"
             };
-            var result = HandlebarsTask.Handlebars(input, null);
+            var result = JsonTasks.Handlebars(input, null);
             Assert.AreEqual("ANVIL", result);
         }
 
@@ -240,7 +240,7 @@ namespace Frends.Kungsbacka.Json.Tests
                 Json = jsonString,
                 HandlebarsTemplate = "{{lcase Manufacturers.0.Products.0.Name}}"
             };
-            var result = HandlebarsTask.Handlebars(input, null);
+            var result = JsonTasks.Handlebars(input, null);
             Assert.AreEqual("anvil", result);
         }
     }

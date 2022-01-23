@@ -52,7 +52,7 @@ namespace Frends.Kungsbacka.Json.Tests
         public void QueryShouldWorkWithStringInput()
         {
             const string query = "$..Products[?(@.Price >= 50)].Name";
-            var result = (IEnumerable<JToken>)QueryTask.Query(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions());
+            var result = (IEnumerable<JToken>)JsonTasks.Query(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions());
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("Anvil", result.First().Value<string>());
         }
@@ -62,7 +62,7 @@ namespace Frends.Kungsbacka.Json.Tests
         {
             const string query = "$..Products[?(@.Price >= 50)].Name";
             var jtoken = JToken.Parse(jsonString);
-            var result = (IEnumerable<JToken>)QueryTask.Query(new QueryInput() { Json = jtoken, Query = query }, new QueryOptions());
+            var result = (IEnumerable<JToken>)JsonTasks.Query(new QueryInput() { Json = jtoken, Query = query }, new QueryOptions());
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("Anvil", result.First().Value<string>());
         }
@@ -71,7 +71,7 @@ namespace Frends.Kungsbacka.Json.Tests
         public void QueryShouldWorkWithDeserializableObjectInput()
         {
             const string query = "$..Products[?(@.Price >= 50)].Name";
-            var result = (IEnumerable<JToken>)QueryTask.Query(new QueryInput() { Json = new DeserializableObject(), Query = query }, new QueryOptions());
+            var result = (IEnumerable<JToken>)JsonTasks.Query(new QueryInput() { Json = new DeserializableObject(), Query = query }, new QueryOptions());
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("Anvil", result.First().Value<string>());
         }
@@ -80,7 +80,7 @@ namespace Frends.Kungsbacka.Json.Tests
         public void TestQuerySingle()
         {
             const string query = "$.Manufacturers[?(@.Name == 'Acme Co')]";
-            var result = (JToken)QueryTask.QuerySingle(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions());
+            var result = (JToken)JsonTasks.QuerySingle(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions());
             Assert.AreEqual("Acme Co", result["Name"].Value<string>());
         }
 
@@ -88,7 +88,7 @@ namespace Frends.Kungsbacka.Json.Tests
         public void QueryShouldThrowIfOptionSetAndNothingIsFound()
         {
             const string query = "$.Manufacturer[?(@.Name == 'Acme Co')]";
-            var ex = Assert.Throws<JsonException>(() => QueryTask.QuerySingle(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions() { ErrorWhenNotMatched = true }));
+            var ex = Assert.Throws<JsonException>(() => JsonTasks.QuerySingle(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions() { ErrorWhenNotMatched = true }));
             Assert.True(ex.Message.IContains("Property 'Manufacturer' does not exist on JObject."));
         }
 
@@ -96,7 +96,7 @@ namespace Frends.Kungsbacka.Json.Tests
         public void QuerySingleShouldNotThrowIfOptionNotSetAndNothingIsFound()
         {
             const string query = "$.Manufacturer[?(@.Name == 'Acme Co')]";
-            var result = QueryTask.QuerySingle(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions() { ErrorWhenNotMatched = false });
+            var result = JsonTasks.QuerySingle(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions() { ErrorWhenNotMatched = false });
             Assert.Null(result);
         }
 
@@ -104,7 +104,7 @@ namespace Frends.Kungsbacka.Json.Tests
         public void QueryShouldNotThrowIfOptionNotSetAndNothingIsFound()
         {
             const string query = "$..Product[?(@.Price >= 50)].Name";
-            var result = QueryTask.Query(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions() { ErrorWhenNotMatched = false });
+            var result = JsonTasks.Query(new QueryInput() { Json = jsonString, Query = query }, new QueryOptions() { ErrorWhenNotMatched = false });
             Assert.AreEqual(result, Enumerable.Empty<object>());
         }
     }

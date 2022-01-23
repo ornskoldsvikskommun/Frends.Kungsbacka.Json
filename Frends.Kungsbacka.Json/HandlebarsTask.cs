@@ -8,7 +8,7 @@ namespace Frends.Kungsbacka.Json
     /// <summary>
     /// JsonSchema Tasks
     /// </summary>
-    public static class HandlebarsTask
+    public static partial class JsonTasks
     {
         /// <summary>
         /// Handlebars provides the power necessary to let you build semantic templates effectively with no frustration.

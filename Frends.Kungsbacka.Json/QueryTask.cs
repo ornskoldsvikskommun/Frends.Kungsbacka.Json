@@ -7,7 +7,7 @@ namespace Frends.Kungsbacka.Json
     /// <summary>
     /// JsonSchema Tasks
     /// </summary>
-    public static class QueryTask
+    public static partial class JsonTasks
     {
         /// <summary>
         /// Query a json string / json token for a single result. See https://github.com/FrendsPlatform/Frends.Json
