@@ -222,5 +222,17 @@ namespace Frends.Kungsbacka.Json.Tests
             dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, new MapOptions { UnpackCdataSection = false });
             Assert.IsInstanceOf<JObject>(result.dest);
         }
+        [Test]
+        public void ShouldMapUsingListOfFromSelectors()
+        {
+            string map = @"[
+                {""from"": ""first_name, firstname, given_name"", ""to"": ""givenname""},
+                {""from"": ""last_name, lastname, surname"", ""to"": ""surname""}
+            ]";
+
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            Assert.AreEqual("John", (string)result.givenname);
+            Assert.AreEqual("Doe", (string)result.surname);
+        }
     }
 }
