@@ -12,7 +12,7 @@ namespace Frends.Kungsbacka.Json
         private List<string> _transformations;
 
         [JsonProperty("from", Required = Required.Always)]
-        public string From { get; set; }
+        public object From { get; set; }
 
         [JsonProperty("to")]
         public string To { get; set; }

@@ -226,8 +226,8 @@ namespace Frends.Kungsbacka.Json.Tests
         public void ShouldMapUsingListOfFromSelectors()
         {
             string map = @"[
-                {""from"": ""first_name, firstname, given_name"", ""to"": ""givenname""},
-                {""from"": ""last_name, lastname, surname"", ""to"": ""surname""}
+                {""from"": [""first_name"", ""firstname"", ""given_name""], ""to"": ""givenname""},
+                {""from"": [""last_name"", ""lastname"", ""surname""], ""to"": ""surname""}
             ]";
 
             dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);

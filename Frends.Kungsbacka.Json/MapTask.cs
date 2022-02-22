@@ -47,46 +47,25 @@ namespace Frends.Kungsbacka.Json
             var mappings = JsonConvert.DeserializeObject<Mapping[]>(input.Map);
             foreach (var mapping in mappings)
             {
-                if (string.IsNullOrEmpty(mapping.From))
+                if (mapping.From == null)
                 {
                     throw new ArgumentNullException(nameof(mapping.From));
                 }
+                if (mapping.From is JArray && string.IsNullOrEmpty(mapping.To))
+                {
+                    throw new ArgumentException("If 'From' is an array, 'To' must have a value.", nameof(mapping.To));
+                }
                 if (string.IsNullOrEmpty(mapping.To))
                 {
-                    mapping.To = mapping.From;
+                    mapping.To = (string)mapping.From;
                 }
-                string from = mapping.From;
                 string to = mapping.To;
                 bool keepExistingValue = TaskHelper.EndsWithChar(ref to, '!');
-                bool useSelectToken = TaskHelper.StartsWithChar(ref from, '?');
-                bool fromHasMultipleValues = from.Contains(",");
                 if (keepExistingValue && input.DestinationObject.Properties().Any(p => p.Name.IEquals(to)))
                 {
                     continue;
                 }
-                dynamic token;
-                if (useSelectToken)
-                {
-                    if (fromHasMultipleValues)
-                    {
-                        token = GetFirstAvailableToken(input.SourceObject, useSelectToken, from.Split(','));
-                    }
-                    else
-                    {
-                        token = input.SourceObject.SelectToken(from);
-                    }
-                }
-                else
-                {
-                    if (fromHasMultipleValues)
-                    {
-                        token = GetFirstAvailableToken(input.SourceObject, useSelectToken, from.Split(','));
-                    }
-                    else
-                    {
-                        token = input.SourceObject[from];
-                    }
-                }
+                JToken token = GetFirstAvailableToken(input.SourceObject, mapping.From);
                 if (token == null)
                 {
                     if (mapping.DefaultPresent)
@@ -114,30 +93,31 @@ namespace Frends.Kungsbacka.Json
             }
             return input.DestinationObject;
         }
-        private static dynamic GetFirstAvailableToken(JObject sourceObject, bool useSelectToken, string[] tokenPropertyNames)
+
+        private static dynamic GetFirstAvailableToken(JObject sourceObject, object mapFrom)
         {
-            if (tokenPropertyNames == null || !tokenPropertyNames.Any()) return null;
-
-            foreach (var availablePropertyName in tokenPropertyNames)
+            if (!(mapFrom is JArray))
             {
+                mapFrom = new JArray(mapFrom);
+            }
+            foreach (string item in (JArray)mapFrom)
+            {
+                var from = item;
+                bool useSelectToken = TaskHelper.StartsWithChar(ref from, '?');
                 JToken token;
-                var propertyName = availablePropertyName.Trim();
-
                 if (useSelectToken)
                 {
-                    token = sourceObject.SelectToken(propertyName);
+                    token = sourceObject.SelectToken(from);
                 }
                 else
                 {
-                    token = sourceObject[propertyName];
+                    token = sourceObject[from];
                 }
-
                 if (token != null)
                 {
                     return token;
                 }
             }
-
             return null;
         }
     }
