@@ -59,6 +59,7 @@ namespace Frends.Kungsbacka.Json
                 string to = mapping.To;
                 bool keepExistingValue = TaskHelper.EndsWithChar(ref to, '!');
                 bool useSelectToken = TaskHelper.StartsWithChar(ref from, '?');
+                bool fromHasMultipleValues = from.Contains(",");
                 if (keepExistingValue && input.DestinationObject.Properties().Any(p => p.Name.IEquals(to)))
                 {
                     continue;
@@ -66,11 +67,25 @@ namespace Frends.Kungsbacka.Json
                 dynamic token;
                 if (useSelectToken)
                 {
-                    token = input.SourceObject.SelectToken(from);
+                    if (fromHasMultipleValues)
+                    {
+                        token = GetFirstAvailableToken(input.SourceObject, useSelectToken, from.Split(','));
+                    }
+                    else
+                    {
+                        token = input.SourceObject.SelectToken(from);
+                    }
                 }
                 else
                 {
-                    token = input.SourceObject[from];
+                    if (fromHasMultipleValues)
+                    {
+                        token = GetFirstAvailableToken(input.SourceObject, useSelectToken, from.Split(','));
+                    }
+                    else
+                    {
+                        token = input.SourceObject[from];
+                    }
                 }
                 if (token == null)
                 {
@@ -98,6 +113,32 @@ namespace Frends.Kungsbacka.Json
                 input.DestinationObject[to] = token;
             }
             return input.DestinationObject;
+        }
+        private static dynamic GetFirstAvailableToken(JObject sourceObject, bool useSelectToken, string[] tokenPropertyNames)
+        {
+            if (tokenPropertyNames == null || !tokenPropertyNames.Any()) return null;
+
+            foreach (var availablePropertyName in tokenPropertyNames)
+            {
+                JToken token;
+                var propertyName = availablePropertyName.Trim();
+
+                if (useSelectToken)
+                {
+                    token = sourceObject.SelectToken(propertyName);
+                }
+                else
+                {
+                    token = sourceObject[propertyName];
+                }
+
+                if (token != null)
+                {
+                    return token;
+                }
+            }
+
+            return null;
         }
     }
 }
