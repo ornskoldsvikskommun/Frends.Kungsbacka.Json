@@ -18,6 +18,10 @@ namespace Frends.Kungsbacka.Json.Tests
             },
             ""propWithCdata"": {
                 ""#cdata-section"": ""value""
+            },
+            ""person"": {
+                ""firstname"": ""John"",
+                ""lastname"": ""Doe""
             }
         }");
 
@@ -229,6 +233,19 @@ namespace Frends.Kungsbacka.Json.Tests
                 {""from"": [""first_name"", ""firstname"", ""given_name""], ""to"": ""givenname""},
                 {""from"": [""last_name"", ""lastname"", ""surname""], ""to"": ""surname""}
             ]";
+
+            dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
+            Assert.AreEqual("John", (string)result.givenname);
+            Assert.AreEqual("Doe", (string)result.surname);
+        }
+        [Test]
+        public void ShouldMapUsingListOfFromSelectorsWithJsonPath()
+        {
+            string map = @"[
+                {""from"": [""firstn_ame"", ""?firstname""], ""to"": ""givenname""},
+                {""from"": [""last_name"", ""?$.person.lastname""], ""to"": ""surname""}
+            ]";
+
 
             dynamic result = JsonTasks.Map(new MapInput() { SourceObject = sourceObject, DestinationObject = null, Map = map }, null);
             Assert.AreEqual("John", (string)result.givenname);
