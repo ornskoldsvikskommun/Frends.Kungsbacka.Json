@@ -172,6 +172,19 @@ the property, not SelectToken.
 ]
 ```
 
+#### Multiple from properties
+
+From can take an array of property names and/or JSONPath expressions. Map will try the names and
+expressions in order and the first non null value is copied to the destination property.
+
+```JSON
+[
+    {"from": ["firstname", "first_name", "$.person[0].name"], "to": "givenname"},
+    {"from": "lastname", "to": "surname"},
+    {"from": "??optional", "to": "optional"}
+]
+```
+
 #### Default value
 
 Map supports default values that is used only if a property does not exist at all or if the
