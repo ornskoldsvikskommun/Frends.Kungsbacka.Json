@@ -179,7 +179,7 @@ expressions in order and the first non null value is copied to the destination p
 
 ```JSON
 [
-    {"from": ["firstname", "first_name", "$.person[0].name"], "to": "givenname"},
+    {"from": ["firstname", "first_name", "?$.persons[0].name"], "to": "givenname"},
     {"from": "lastname", "to": "surname"},
     {"from": "??optional", "to": "optional"}
 ]
