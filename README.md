@@ -175,7 +175,7 @@ the property, not SelectToken.
 #### Multiple from properties
 
 From can take an array of property names and/or JSONPath expressions. Map will try the names and
-expressions in order and the first non null value is copied to the destination property.
+expressions in order and the first non null value is copied to the target property.
 
 ```JSON
 [
@@ -188,7 +188,7 @@ expressions in order and the first non null value is copied to the destination p
 #### Default value
 
 Map supports default values that is used only if a property does not exist at all or if the
-property exists and the value is null. A map with default value can look like the example below.
+property exists and the value is null. A map with a default value can look like the example below.
 
 ```JSON
 [
