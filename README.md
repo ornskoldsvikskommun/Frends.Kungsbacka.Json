@@ -1,5 +1,7 @@
 *Detta är en fork av [github.com/Kungsbacka/Frends.Kungsbacka.Json](https://github.com/Kungsbacka/Frends.Kungsbacka.Json). Kungsbacka använder denna istället för Frends.Json. För att vi ska kunna dela med oss av våra processer så behöver den finnas i er frends-instans.*
 
+*Har du ingen möjlighet att bygga ett nuget-paket så finns den senaste versionen färdigpacketerad under mappen Package*
+
 # Frends.Kungsbacka.Json
 
 This is a replacement for Frends.Json.
