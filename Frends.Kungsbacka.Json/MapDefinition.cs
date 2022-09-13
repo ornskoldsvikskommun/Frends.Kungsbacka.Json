@@ -79,10 +79,10 @@ namespace Frends.Kungsbacka.Json
         public string TransformationName { get; set; }
 
         /// <summary>
-        /// Transformation function. Must be a Func&lt;JToken&gt;
+        /// Transformation function. Must be a Func&lt;JToken,JToken&gt;
         /// Example function that takes the first element in an array.
         /// <code>
-        /// return new Func&lt;JToken&gt;((input) =>
+        /// return new Func&lt;JToken,JToken&gt;((input) =>
         /// {
         ///     if (input is JArray array)
         ///     {

@@ -29,21 +29,22 @@ task to create the template. The feature relies on regex with balanced groups an
 a full parser. It supports escaping, but there will likely be corner cases that will fail.
 
 [Handlebars.Net](https://github.com/Handlebars-Net/Handlebars.Net) supports adding custom helper
-functions. This is now exposed in the Handlebars task. Custom helpers are declared inside a C#
-statement and assigned to a variable that can then be referenced in a Handlebars task.
+functions. This is now exposed in the Handlebars task. Custom helpers can be declared inside a C#
+statement and assigned to a variable that can then be referenced in a Handlebars task, or you can
+create a helper directly on the task.
 
 ### New Map task
 
 Introducing a new task called Map that can create a new `JObject` by querying an existing `JObject`.
-It can handle defaults if a property does not exist and do simple transformations. Future versions
-of the Map task will allow for adding custom transformations.
+It can handle defaults if a property does not exist and do simple transformations. Map also supports
+custom transformations that is similar to the Handlebars tasks helper functions.
 
 ### New ConvertXmlBytesToJToken task
 
 ConvertXmlStringToJToken has got a new sibling task called ConvertXmlBytesToJToken. It's
 useful when you can't know the Xml encoding without parsing the Xml declaration. Using this
 task you don't have to convert the Xml content to a string before converting it to Json.
-Instead you let `System.Xml.XmlDocument` figure out the encoding.
+The task uses `System.Xml.XmlDocument` to figure out the encoding.
 
 ### Query, QuerySingle, ConvertJsonStringToJToken and ConvertXmlStringToJToken
 
@@ -53,9 +54,9 @@ they do in Frends.Json with the addition of being able to deserialize more types
 
 ## Documentation
 
-Checkout [Frends.Json](https://github.com/Kungsbacka/Frends.Json) for documentation for most
-tasks. Here you will find information about additional tasks and features that is not
-present in Frends.Json.
+This readme file only contains detailed documentation about new and changed tasks. For tasks
+that have not had any functional changes, you can use the official documentation for
+[Frends.Json](https://github.com/Kungsbacka/Frends.Json).
 
 ### Anglebrackets in Handlebars templates and partials
 
@@ -73,8 +74,8 @@ Handlebars.Net does not support angle brackets and there is no way to tell Handl
 use angle brackets instead of curly braces. Before the template is sent to Handlebars for
 compilation, angle brackets are replaced with curly braces. This is done using regular
 expressions with balanced groups and a little bit of extra parsing. Handlebars.Net uses a
-"real" parser and not regex, so don't expect angle brackets to behave exactly the same as
-using curly braces directly. But it will work fine for most cases.
+parser and not regex, so don't expect angle brackets to behave exactly the same as using
+curly braces directly. But it will work fine for most cases.
 
 The angle brackets feature has to be enabled under Options. Here is an example of a template
 that uses angle brackets.
@@ -88,8 +89,8 @@ that uses angle brackets.
 </Person>
 ```
 
-Before it's compiled by Handlebars Frends will process all code elements and then replace
-all angle brackets with curly braces. The resulting template will look something like this:
+Before it's sent to Handlebars, Frends will process all code elements and after that all angle
+brackets are replaced by curly braces. The resulting template will look something like this:
 
 
 ```xml
@@ -103,14 +104,14 @@ all angle brackets with curly braces. The resulting template will look something
 
 ### Custom Helpers for Handlebars
 
-Handlebars.Net supports custom helpers and this functionallity is exposed in the Handlebars
+Handlebars.Net supports custom helpers and this functionallity is now exposed in the Handlebars
 task. The way you define a custom helper is by creating a delegate of one of the following types:
 `Action<System.IO.TextWriter,dynamic,object[]>` or if its a block helper
 `Action<System.IO.TextWriter,dynamic,dynamic,object[]>`.
 `System.IO.TextWriter` must include the namespace since `System.IO` is not one of the namespaces
 included in a process.
 
-You can copy and paste the following into a helper action...
+Below are templates for the two different kinds of helpers that you can use as a starting point.
 
 ```C#
 new Action<System.IO.TextWriter, dynamic, object[]>((writer, context, arguments) =>
@@ -174,8 +175,8 @@ the property, not SelectToken.
 
 #### Default value
 
-Map supports default values that is used only if a property does not exist at all or if the
-property exists and the value is null. A map with default value can look like the example below.
+Map supports default values that are used only if a property does not exist at all or if the
+property exists and the value is null. A map a with default value can look like the example below.
 
 ```JSON
 [
