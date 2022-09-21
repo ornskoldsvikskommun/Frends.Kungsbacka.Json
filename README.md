@@ -122,7 +122,7 @@ new Action<System.IO.TextWriter, dynamic, object[]>((writer, context, arguments)
 {
     // Use writer to output data
     // Context contains JSON object
-    // arguments contain what's supplied as an argument when calling the helper
+    // arguments contain the arguments supplied when calling the helper
 })
 ```
 
