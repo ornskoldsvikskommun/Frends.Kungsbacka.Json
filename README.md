@@ -67,7 +67,7 @@ that have not had any functional changes, you can use the official documentation
 Handlebars uses {{curley braces}} for expressions in a template. Since Frends also use Handlebars 
 notation for mixing code elements with text, XML, JSON, etc, you have to use expression mode
 with a verbatim string (@"") when you create Handlebars templates to not confuse Frends.
-This opens up the possibility to mix in Frends code elements in Handlebars templates. One way around
+This makes it impossible to mix in Frends code elements in Handlebars templates. One way around
 this problem is to create the template in an expression block before the Handlebars task.
 
 By switching to [[angle brackets]] for Handlebars you can now freely mix Handlebars expressions
