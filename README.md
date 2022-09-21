@@ -272,6 +272,6 @@ ConvertXmlBytesToJToken does the same thing as ConvertXmlStringToJToken but take
 instead of a string as input. The byte array is used to construct a `System.Xml.XmlDocument`
 that is then serialized to Json with `JsonConvert.SerializeXmlNode`. This is the same thing
 ConvertXmlStringToJToken does, but with a string. This is useful in scenarios where you don't
-know how the XML is encoded without looking at the XML declaration (when you get an HTTP content-
-type without charset for example). This way you skip the steps of figuring out the encoding and
+know how the XML is encoded without looking at the XML declaration (when you get an HTTP
+content&#8209;type without charset for example). This way you skip the steps of figuring out the encoding and
 converting the XML to a string before passing it to the converter.
