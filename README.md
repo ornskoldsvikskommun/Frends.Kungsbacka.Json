@@ -6,12 +6,12 @@ This is a replacement for Frends.Json.
 
 ### All tasks
 
-Frends.Json has a method for converting input to JToken. Currently it supports string and JToken.
+Frends.Json has a method for converting input to JToken. Currently, it supports string and JToken.
 Frends.Kungsbacka.Json changes this slightly to support all objects where `ToString()` returns
-the object serialized as Json. This includes `CaseInsensitivePropertyTree` which is the object
-Frends use to deserialize data coming from another process (i.g. invoking a sub process).
+the object serialized as JSON. This includes `CaseInsensitivePropertyTree` which is the object
+Frends use to deserialize data coming from another process (i.g. invoking a subprocess).
 `CaseInsensitivePropertyTree` is also used for trigger parameters. This removes the need to
-manually deserialize data passed between processes before passing it to a Json task.
+manually deserialize data passed between processes before passing it to a JSON task.
 
 ### Validate task
 
@@ -20,13 +20,13 @@ to [NJsonSchema](https://github.com/RicoSuter/NJsonSchema).
 
 ### Handlebars task
 
-Handlebars now supports using [[angle brackets]] instead of {{curly braces}} in
-Handlebars templates and partials. The angle brackets gets replaced with curly braces before
-the template is passed to Handlebars. When using angle brackets the template or partial no longer
-has to be an expression with a verbatim string (@"template"), but can be text instead. This opens
-up the possibility to use Frends expression syntax directly inside templates without adding an extra
-task to create the template. The feature relies on regex with balanced groups and does not use
-a full parser. It supports escaping, but there will likely be corner cases that will fail.
+Handlebars now support using [[angle brackets]] instead of {{curly braces}} in Handlebars templates
+and partials. The angle brackets get replaced with curly braces before the template is passed to
+Handlebars. When using angle brackets the template or partial no longer has to be an expression with
+a verbatim string (@"template") but can be text instead. This opens up the possibility to use Frends
+expression syntax directly inside templates without adding an extra task to create the template. The
+feature relies on regex with balanced groups and does not use a full parser. It supports escaping, but
+there will likely be corner cases that will fail.
 
 [Handlebars.Net](https://github.com/Handlebars-Net/Handlebars.Net) supports adding custom helper
 functions. This is now exposed in the Handlebars task. Custom helpers can be declared inside a C#
@@ -37,18 +37,18 @@ create a helper directly on the task.
 
 Introducing a new task called Map that can create a new `JObject` by querying an existing `JObject`.
 It can handle defaults if a property does not exist and do simple transformations. Map also supports
-custom transformations that is similar to the Handlebars tasks helper functions.
+custom transformations that are similar to the Handlebars tasks helper functions.
 
 ### New ConvertXmlBytesToJToken task
 
 ConvertXmlStringToJToken has got a new sibling task called ConvertXmlBytesToJToken. It's
-useful when you can't know the Xml encoding without parsing the Xml declaration. Using this
-task you don't have to convert the Xml content to a string before converting it to Json.
+useful when you can't know the XML encoding without parsing the XML declaration. Using this
+task you don't have to convert the XML content to a string before converting it to JSON.
 The task uses `System.Xml.XmlDocument` to figure out the encoding.
 
 ### Query, QuerySingle, ConvertJsonStringToJToken and ConvertXmlStringToJToken
 
-Query, QuerySingle, ConvertJsonStringToJToken and ConvertXmlStringToJToken should all work as
+Query, QuerySingle, ConvertJsonStringToJToken, and ConvertXmlStringToJToken should all work as
 they do in Frends.Json with the addition of being able to deserialize more types of input
 ([see "All tasks" above](#all-tasks)).
 
@@ -58,24 +58,24 @@ This readme file only contains detailed documentation about new and changed task
 that have not had any functional changes, you can use the official documentation for
 [Frends.Json](https://github.com/Kungsbacka/Frends.Json).
 
-### Anglebrackets in Handlebars templates and partials
+### Angle brackets in Handlebars templates and partials
 
-Handlebars uses {{curley braces}} for expresions in a template. Since Frends also use Hanlebars
-notation for mixing code elements with text, Xml, Json, etc, you have to use expression mode
-with a verbatim string (@"") when you create Handlebars templates as to not confuse Frends.
+Handlebars uses {{curley braces}} for expressions in a template. Since Frends also use Handlebars 
+notation for mixing code elements with text, XML, JSON, etc, you have to use expression mode
+with a verbatim string (@"") when you create Handlebars templates to not confuse Frends.
 This makes it impossible to mix in Frends code elements in Handlebars templates. One way around
 this problem is to create the template in an expression block before the Handlebars task.
 
 By switching to [[angle brackets]] for Handlebars you can now freely mix Handlebars expressions
 and code elements with curly braces directly in the Handlebars task. Just change from expression
-mode to text, Xml or Json and remove the verbatime string.
+mode to text, XML, or JSON and remove the verbatim string.
 
 Handlebars.Net does not support angle brackets and there is no way to tell Handlebars.Net to
 use angle brackets instead of curly braces. Before the template is sent to Handlebars for
 compilation, angle brackets are replaced with curly braces. This is done using regular
 expressions with balanced groups and a little bit of extra parsing. Handlebars.Net uses a
-parser and not regex, so don't expect angle brackets to behave exactly the same as using
-curly braces directly. But it will work fine for most cases.
+parser and not regex, so don't expect angle brackets to behave the same as using curly braces
+directly. But it will work fine for most cases.
 
 The angle brackets feature has to be enabled under Options. Here is an example of a template
 that uses angle brackets.
@@ -89,7 +89,7 @@ that uses angle brackets.
 </Person>
 ```
 
-Before it's sent to Handlebars, Frends will process all code elements and after that all angle
+Before it's sent to Handlebars, Frends will process all code elements and after that, all angle
 brackets are replaced by curly braces. The resulting template will look something like this:
 
 
@@ -104,7 +104,7 @@ brackets are replaced by curly braces. The resulting template will look somethin
 
 ### Custom Helpers for Handlebars
 
-Handlebars.Net supports custom helpers and this functionallity is now exposed in the Handlebars
+Handlebars.Net supports custom helpers and this functionality is now exposed in the Handlebars
 task. The way you define a custom helper is by creating a delegate of one of the following types:
 `Action<System.IO.TextWriter,dynamic,object[]>` or if its a block helper
 `Action<System.IO.TextWriter,dynamic,dynamic,object[]>`.
@@ -116,9 +116,9 @@ Below are templates for the two different kinds of helpers that you can use as a
 ```C#
 new Action<System.IO.TextWriter, dynamic, object[]>((writer, context, arguments) =>
 {
-    // Use writer to ouput data
-    // Context contains Json object
-    // arguments contains whats supplied as argument when calling the helper
+    // Use writer to output data
+    // Context contains JSON object
+    // arguments contain the arguments supplied when calling the helper
 })
 ```
 
@@ -130,8 +130,8 @@ new Action<System.IO.TextWriter, dynamic, dynamic, object[]>((writer, options, c
 
 ### Map
 
-The purpouse of Map is to take one JObject and convert it to another JObject. It supports
-tranformations (both custom and Built-in) and default values.
+The purpose of Map is to take one JObject and convert it to another JObject. It supports
+transformations (both custom and Built-in) and default values.
 
 A map can look something like this:
 
@@ -176,7 +176,7 @@ the property, not SelectToken.
 #### Multiple from properties
 
 From can take an array of property names and/or JSONPath expressions. Map will try the names and
-expressions in order and the first non null value is copied to the target property.
+expressions in order and the first non-null value is copied to the target property.
 
 ```JSON
 [
@@ -188,7 +188,7 @@ expressions in order and the first non null value is copied to the target proper
 
 #### Default value
 
-Map supports default values that is used only if a property does not exist at all or if the
+Map supports default values that are used only if a property does not exist at all or if the
 property exists and the value is null. A map with a default value can look like the example below.
 
 ```JSON
@@ -206,7 +206,7 @@ a default value without renaming it.
 
 #### Do not overwrite
 
-If an existing object is supplied as the target object, you can tell map not to overwrite the
+If an existing object is supplied as the target object, you can tell Map not to overwrite the
 target property value if it already exists. You do this by adding an exclamation mark (!) to the
 end of the target property name.
 
@@ -231,9 +231,9 @@ Map can transform a value before it is added to the target object. There are bot
 transformations and support for adding custom transformations.
 
 The built-in transformations currently available are: *LCase*, *UCase*, *Trim*, *SweSsn* (format as
-Swedish personnummer ("SSN")) and *SweOrgNr* (format as Swedish organization number (organisationsnummer)). 
+Swedish personnummer ("SSN")), and *SweOrgNr* (format as Swedish organization number (organisationsnummer)). 
 
-The example below uses the LCase transformation to make the value lower case.
+The example below uses the LCase transformation to make the value lowercase.
 
 ```JSON
 [
@@ -268,6 +268,6 @@ ConvertXmlBytesToJToken does the same thing as ConvertXmlStringToJToken but take
 instead of a string as input. The byte array is used to construct a `System.Xml.XmlDocument`
 that is then serialized to Json with `JsonConvert.SerializeXmlNode`. This is the same thing
 ConvertXmlStringToJToken does, but with a string. This is useful in scenarios where you don't
-know how the Xml is encoded without looking at the Xml declaration (when you get a Http content
-type without charset for example). This way you skip the steps of figuring out the encoding and
-converting the Xml to a string before passing it to the converter.
+know how the XML is encoded without looking at the XML declaration (when you get an HTTP
+content&#8209;type without charset for example). This way you skip the steps of figuring out the encoding and
+converting the XML to a string before passing it to the converter.
