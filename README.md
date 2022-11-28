@@ -157,7 +157,7 @@ The example below uses JSONPath syntax.
 [
     {"from": "firstname", "to": "givenname"},
     {"from": "lastname", "to": "surname"},
-    {"from": "?$.addresses[0].zipCode"}, "to": "zipCode"}
+    {"from": "?$.addresses[0].zipCode", "to": "zipCode"}
 ]
 ```
 
@@ -195,7 +195,7 @@ property exists and the value is null. A map with a default value can look like 
 [
     {"from": "firstname", "to": "givenname"},
     {"from": "lastname", "to": "surname"},
-    {"from": "?$.addresses[0].zipCode"}, "to": "zipCode"},
+    {"from": "?$.addresses[0].zipCode", "to": "zipCode"},
     {"from": "role", "to": "role", "def": "User"}
 ]
 ```
@@ -214,7 +214,7 @@ end of the target property name.
 [
     {"from": "firstname", "to": "givenname"},
     {"from": "lastname", "to": "surname"},
-    {"from": "?$.addresses[0].zipCode"}, "to": "zipCode"},
+    {"from": "?$.addresses[0].zipCode", "to": "zipCode"},
     {"from": "role", "to": "role", "def": "User"},
     {"from": "status", "to": "user_status!"}
 ]
@@ -239,7 +239,7 @@ The example below uses the LCase transformation to make the value lowercase.
 [
     {"from": "firstname", "to": "givenname"},
     {"from": "lastname", "to": "surname"},
-    {"from": "?$.addresses[0].zipCode"}, "to": "zipCode"},
+    {"from": "?$.addresses[0].zipCode", "to": "zipCode"},
     {"from": "role", "to": "role", "def": "User"},
     {"from": "status", "to": "user_status*"},
     {"from": "lang", "to": "language", "trans": "LCase"}
