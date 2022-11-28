@@ -46,7 +46,7 @@ useful when you can't know the XML encoding without parsing the XML declaration.
 task you don't have to convert the XML content to a string before converting it to JSON.
 The task uses `System.Xml.XmlDocument` to figure out the encoding.
 
-### Query, QuerySingle, ConvertJsonStringToJToken and ConvertXmlStringToJToken
+### Query, QuerySingle, ConvertJsonStringToJToken, and ConvertXmlStringToJToken
 
 Query, QuerySingle, ConvertJsonStringToJToken, and ConvertXmlStringToJToken should all work as
 they do in Frends.Json with the addition of being able to deserialize more types of input
@@ -60,7 +60,7 @@ that have not had any functional changes, you can use the official documentation
 
 ### Angle brackets in Handlebars templates and partials
 
-Handlebars uses {{curley braces}} for expressions in a template. Since Frends also use Handlebars 
+Handlebars use {{curley braces}} for expressions in a template. Since Frends also use Handlebars 
 notation for mixing code elements with text, XML, JSON, etc, you have to use expression mode
 with a verbatim string (@"") when you create Handlebars templates to not confuse Frends.
 This makes it impossible to mix in Frends code elements in Handlebars templates. One way around
@@ -200,7 +200,7 @@ property exists and the value is null. A map with a default value can look like 
 ]
 ```
 
-Note that *from* and *to* maps to the same name. This is not required when using default values,
+Note that *from* and *to* map to the same name. This is not required when using default values,
 but it shows a common use case for default values where you just want to give an existing property
 a default value without renaming it.
 
