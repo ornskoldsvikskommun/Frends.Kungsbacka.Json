@@ -209,6 +209,18 @@ namespace Frends.Kungsbacka.Json.Tests
         }
 
         [Test]
+        public void HandlebarsBuiltInExistsHelperShouldTakeMultipleArguments()
+        {
+            var input = new HandlebarsInput()
+            {
+                Json = jsonString,
+                HandlebarsTemplate = "{{#each Manufacturers.0.Products}}{{#exists Name Price}}Product: {{Name}}, Price: {{Price}}{{/exists}}{{/each}}"
+            };
+            var result = JsonTasks.Handlebars(input, null);
+            Assert.AreEqual("Product: Anvil, Price: 50", result);
+        }
+
+        [Test]
         public void HandlebarsShouldUseBuiltInTrimHelper()
         {
             var input = new HandlebarsInput()

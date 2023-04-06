@@ -24,9 +24,9 @@ to [NJsonSchema](https://github.com/RicoSuter/NJsonSchema).
 
 ### Handlebars task
 
-Handlebars now support using [[angle brackets]] instead of {{curly braces}} in Handlebars templates
-and partials. The angle brackets get replaced with curly braces before the template is passed to
-Handlebars. When using angle brackets the template or partial no longer has to be an expression with
+Handlebars now support using [[square brackets]] instead of {{curly braces}} in Handlebars templates
+and partials. The square brackets get replaced with curly braces before the template is passed to
+Handlebars. When using square brackets the template or partial no longer has to be an expression with
 a verbatim string (@"template") but can be text instead. This opens up the possibility to use Frends
 expression syntax directly inside templates without adding an extra task to create the template. The
 feature relies on regex with balanced groups and does not use a full parser. It supports escaping, but
@@ -62,7 +62,7 @@ This readme file only contains detailed documentation about new and changed task
 that have not had any functional changes, you can use the official documentation for
 [Frends.Json](https://github.com/Kungsbacka/Frends.Json).
 
-### Angle brackets in Handlebars templates and partials
+### Square brackets in Handlebars templates and partials
 
 Handlebars use {{curley braces}} for expressions in a template. Since Frends also use Handlebars 
 notation for mixing code elements with text, XML, JSON, etc, you have to use expression mode
@@ -70,19 +70,19 @@ with a verbatim string (@"") when you create Handlebars templates to not confuse
 This makes it impossible to mix in Frends code elements in Handlebars templates. One way around
 this problem is to create the template in an expression block before the Handlebars task.
 
-By switching to [[angle brackets]] for Handlebars you can now freely mix Handlebars expressions
+By switching to [[square brackets]] for Handlebars you can now freely mix Handlebars expressions
 and code elements with curly braces directly in the Handlebars task. Just change from expression
 mode to text, XML, or JSON and remove the verbatim string.
 
-Handlebars.Net does not support angle brackets and there is no way to tell Handlebars.Net to
-use angle brackets instead of curly braces. Before the template is sent to Handlebars for
-compilation, angle brackets are replaced with curly braces. This is done using regular
+Handlebars.Net does not support square brackets and there is no way to tell Handlebars.Net to
+use square brackets instead of curly braces. Before the template is sent to Handlebars for
+compilation, square brackets are replaced with curly braces. This is done using regular
 expressions with balanced groups and a little bit of extra parsing. Handlebars.Net uses a
-parser and not regex, so don't expect angle brackets to behave the same as using curly braces
+parser and not regex, so don't expect square brackets to behave the same as using curly braces
 directly. But it will work fine for most cases.
 
-The angle brackets feature has to be enabled under Options. Here is an example of a template
-that uses angle brackets.
+The square brackets feature has to be enabled under Options. Here is an example of a template
+that uses square brackets.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
