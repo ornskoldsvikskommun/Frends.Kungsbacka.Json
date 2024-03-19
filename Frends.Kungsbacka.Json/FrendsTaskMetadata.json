@@ -19,7 +19,13 @@
 			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlStringToJToken"
 		},
 		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlStringToJTokenXmlReader"
+		},
+		{
 			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlBytesToJToken"
+		},
+		{
+			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.ConvertXmlBytesToJTokenXmlReader"
 		},
 		{
 			"TaskMethod": "Frends.Kungsbacka.Json.JsonTasks.Map"
