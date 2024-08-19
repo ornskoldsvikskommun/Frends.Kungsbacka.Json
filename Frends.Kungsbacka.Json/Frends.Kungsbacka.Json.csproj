@@ -9,7 +9,7 @@
     <IncludeSource>true</IncludeSource>
     <PackageTags>Frends</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>1.7.0</Version>
+    <Version>1.8.9</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,10 +20,11 @@
 
   <ItemGroup>
 	  <!-- Use same version of Handlebars.NET as the rest of Frends to avoid dependency issues -->
+	  <PackageReference Include="BenchmarkDotNet" Version="0.13.11" />
 	  <PackageReference Include="Handlebars.Net" Version="1.9.5" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 	<!-- Use same version of Json.NET as the rest of Frends to avoid dependency issues -->
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NJsonSchema" Version="10.5.2" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
